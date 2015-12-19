@@ -74,11 +74,11 @@ class Player {
                 }
                 solution = passerelleMap.get(passerelle);
             }
-            int exit = solution.exits.iterator().next();
-            System.out.println(solution.nodeNumber + " " + exit); // Example: 3 4 are the indices of the nodes you wish to sever the link between
-            solution.exits.remove(exit);
-            if(solution.exits.size() == 0){
-                passerelleMap.remove(solution.nodeNumber);
+            int exit = solution.getExits().iterator().next();
+            System.out.println(solution.getNodeNumber() + " " + exit); // Example: 3 4 are the indices of the nodes you wish to sever the link between
+            solution.removeExit(exit);
+            if(solution.getExits().size() == 0){
+                passerelleMap.remove(solution.getNodeNumber());
             }
         }
     }
@@ -87,11 +87,11 @@ class Player {
         Set<Integer> maxSizePasserelle = new HashSet<>();
         int tailleMax=0;
         for(Map.Entry<Integer,Passerelle> p : passerelleMap.entrySet()) {
-            if(p.getValue().exits.size() > tailleMax){
-                tailleMax = p.getValue().exits.size() ;
+            if(p.getValue().getExits().size() > tailleMax){
+                tailleMax = p.getValue().getExits().size() ;
                 maxSizePasserelle.clear();
                 maxSizePasserelle.add(p.getKey());
-            } else if (p.getValue().exits.size()  == tailleMax){
+            } else if (p.getValue().getExits().size()  == tailleMax){
                 maxSizePasserelle.add(p.getKey());
             }
         }
@@ -146,8 +146,8 @@ class Player {
 }
 
 class Passerelle{
-    public int nodeNumber;
-    public Set<Integer> exits = new HashSet<>();
+    private int nodeNumber;
+    private Set<Integer> exits = new HashSet<>();
 
     public Passerelle(int node, int exit){
         this.nodeNumber = node;
@@ -156,5 +156,21 @@ class Passerelle{
 
     public void addExit(int e){
         this.exits.add(e);
+    }
+
+    public int getNodeNumber() {
+        return nodeNumber;
+    }
+
+    public void setNodeNumber(int nodeNumber) {
+        this.nodeNumber = nodeNumber;
+    }
+
+    public Set<Integer> getExits() {
+        return exits;
+    }
+
+    public void removeExit(int e) {
+        this.exits.remove(e);
     }
 }
